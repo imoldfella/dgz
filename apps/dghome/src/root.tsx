@@ -1,4 +1,4 @@
-import { component$, useStyles$ } from '@builder.io/qwik';
+import { component$} from '@builder.io/qwik';
 import {
   QwikCityProvider,
   RouterOutlet,
@@ -6,7 +6,8 @@ import {
 } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
-import globalStyles from './global.css?inline';
+import "./global.css";
+import {} from "@angular/localize/init"
 
 export default component$(() => {
   /**
@@ -15,7 +16,7 @@ export default component$(() => {
    *
    * Don't remove the `<head>` and `<body>` elements.
    */
-  useStyles$(globalStyles);
+
 
   return (
     <QwikCityProvider>
@@ -24,7 +25,8 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
         <RouterHead />
       </head>
-      <body lang="en">
+      <body lang="en" class='prose dark:prose-invert dark:bg-black dark:text-white'>
+      <script dangerouslySetInnerHTML={`if(localStorage.theme==="dark"){document.documentElement.classList.add("dark");}else if(typeof localStorage.theme==="undefined"){if(window.matchMedia("(prefers-color-scheme: dark)").matches){document.documentElement.classList.add("dark");}}`} />
         <RouterOutlet />
         <ServiceWorkerRegister />
       </body>

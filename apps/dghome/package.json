@@ -1,3 +1,17 @@
 {
-  "name": "dghome"
+  "name": "dghome",
+  "dependencies": {
+    "@angular/localize": "^16.1.4",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9"
+  },
+  "devDependencies": {
+
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.1"
+  },
+  "scripts": {
+    "build.server": "vite build -c adapters/static/vite.config.ts"
+  }
 }
