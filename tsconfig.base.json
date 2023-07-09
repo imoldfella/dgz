@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@dgz/dgh": ["libs/dgh/src/index.ts"],
       "@dgz/ui-qwik": ["libs/ui-qwik/src/index.ts"]
     }
   },

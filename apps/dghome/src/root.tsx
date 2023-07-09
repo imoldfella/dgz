@@ -9,6 +9,9 @@ import { RouterHead } from './components/router-head/router-head';
 import "./global.css";
 import {} from "@angular/localize/init"
 
+import { LanguageProvider, ThemeProvider, LoginProvider, ThemeBootstrap } from '@dgz/ui-qwik';
+
+
 export default component$(() => {
   /**
    * The root of a QwikCity site always start with the <QwikCityProvider> component,
@@ -19,17 +22,22 @@ export default component$(() => {
 
 
   return (
-    <QwikCityProvider>
+    <QwikCityProvider> 
+      <LanguageProvider>
+      <LoginProvider  >
       <head>
         <meta charSet="utf-8" />
         <link rel="manifest" href="/manifest.json" />
         <RouterHead />
       </head>
       <body lang="en" class='prose dark:prose-invert dark:bg-black dark:text-white'>
-      <script dangerouslySetInnerHTML={`if(localStorage.theme==="dark"){document.documentElement.classList.add("dark");}else if(typeof localStorage.theme==="undefined"){if(window.matchMedia("(prefers-color-scheme: dark)").matches){document.documentElement.classList.add("dark");}}`} />
+        <ThemeProvider />
         <RouterOutlet />
         <ServiceWorkerRegister />
+        <ThemeBootstrap />
       </body>
+      </LoginProvider>
+      </LanguageProvider>
     </QwikCityProvider>
   );
 });
