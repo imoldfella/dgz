@@ -1,9 +1,10 @@
-import { type Signal, component$, useSignal, Slot, useStore } from '@builder.io/qwik';
+import { type Signal, component$, useSignal, Slot, useStore, JSXChildren } from '@builder.io/qwik';
 import {
   useContext,
   useContextProvider,
   createContextId,
 } from '@builder.io/qwik';
+import { useLocation } from '@builder.io/qwik-city';
  
 export interface Language {
   ln: string
@@ -14,20 +15,28 @@ export interface Language {
 export const LanguageContext = createContextId<Language>(
   'docs.theme-context'
 );
+
+const rtl = ["iw","ar"]
  
-export const LanguageProvider =  component$(() => {
+export interface Props {
+  avail: string[]
+  default: string
+  defaultlc?: string
+}
+export const LanguageProvider =  component$((props: Props) => {
+  const loc = useLocation()
+  let ln = loc.url.pathname.split('/')[1]
+  if (!props.avail.includes(ln)) {
+    ln = props.default
+  }
   const lang = useStore<Language>({
-    ln: 'en',
-    lc: 'en-us',
-    dir: 'ltr',
-    avail: ['en', 'es', 'iw'],
+    ln: ln,
+    lc: props.defaultlc ?? props.default,
+    dir: rtl.includes(props.default) ? 'rtl' : 'ltr',
+    avail: props.avail,
   })
   useContextProvider(LanguageContext, lang);
-  return (
-    <>
-      <Slot />
-    </>
-  );
+  return <Slot />
 });
 
 export const useLanguage = () => useContext(LanguageContext);

@@ -4,7 +4,7 @@ import { useLanguage } from "../provider"
 import { DarkButton } from "../theme"
 import { Ab, Center } from "../theme/basics"
 
-export const SimplePage = component$((props: { title: string }) => {
+export const SimplePage = component$(() => {
     const ln = useLanguage()
 
     return <><div dir={ln.dir} class='px-2 space-x-1 my-2 fixed w-screen flex flex-row items-center'>

@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { JSXChildren, component$, useVisibleTask$ } from "@builder.io/qwik";
 import { Language, useLanguage } from "../provider";
 import { useNavigate } from "@builder.io/qwik-city";
 import { JSX } from "@builder.io/qwik/jsx-runtime";
@@ -6,43 +6,57 @@ import { JSX } from "@builder.io/qwik/jsx-runtime";
 type LanguageMap = {
     [key: string]: { name: string, dir: 'ltr' | 'rtl' | 'auto' }
 }
-const languages : LanguageMap = {
+const languages: LanguageMap = {
     en: {
         name: 'English',
         dir: 'ltr',
+    },
+    es: {
+        name: 'Español',
+        dir: 'ltr',
+    },
+    iw: {
+        name: 'עברית',
+        dir: 'rtl',
     }
 }
-
+const wtf = ['en', 'es', 'iw']
 
 
 // this has to work with the router(s)
 // unclear if we should use the list of languages from a context or require it to be passed as a prop. 
-type SelectProps = JSX.IntrinsicElements['select'] 
-export const LanguageSelect = component$((props: SelectProps) => {
+type Props = JSX.IntrinsicElements['select'] 
+export const LanguageSelect = component$((props: Props) => {
     const nav = useNavigate()
     const ln = useLanguage()
-   return (<div class='flex  text-black dark:text-white rounded-md items-center '>
-    <label class='block mx-2' for='ln'>{props.children}</label>
-    <select
-        id='ln'
-        value={ln.ln}
-        aria-label= {$localize`Select language`}
+    useVisibleTask$(()=>{
+        console.log('ln', ln)
+    })
+    return (<div class='flex  text-black dark:text-white rounded-md items-center '>
+        <label class='block mx-2' for='ln'>{props.children}</label>
+        <select
+            id='ln'
+            value={ln.ln}
+            aria-label={$localize`Select language`}
 
-        onInput$={(e, target) => {
-            const newLang = target.value
-            
-        }}
-        {...props}
-    >
-        {ln.avail.map((lnx) => {
-            const lnd = languages[lnx]
-            return <option key={lnx} value={lnx}>{lnd.name}</option>
-        })}
-    </select>
-</div>
-)
+            onInput$={(e, target) => {
+                const newlang = target.value
+                nav(newlang)
+            }}
+            {...props}
+        >
+           
+                {wtf.map((lnx) => {
+                    const lnd = languages[lnx]
+                    return <option key={lnx} value={lnx}>{lnd.name}</option>
+                })}
+        </select>
+    </div>
+    )
 
 })
+
+
 
 
 /*
