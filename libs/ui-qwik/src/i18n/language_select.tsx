@@ -36,7 +36,7 @@ export const LanguageSelect = component$((props: SelectProps) => {
     >
         {ln.avail.map((lnx) => {
             const lnd = languages[lnx]
-            return <option key={lnx} value={lnx}>{lnd.name}&nbsp;</option>
+            return <option key={lnx} value={lnx}>{lnd.name}</option>
         })}
     </select>
 </div>
