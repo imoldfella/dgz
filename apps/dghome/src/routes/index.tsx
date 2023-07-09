@@ -1,7 +1,5 @@
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Link } from '@builder.io/qwik-city';
-import { DarkButton, UiQwik } from '@dgz/ui-qwik';
 import { Onboard } from '@dgz/dgh'
 
 export default component$(() => {

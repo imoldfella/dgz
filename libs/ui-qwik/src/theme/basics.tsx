@@ -13,13 +13,6 @@ export const Ab = component$((props: LinkProps) => {
     </Link>
 })
 
-type DivProps = JSX.IntrinsicElements['div']
-export const Center = component$((props: DivProps)=> {
-    return <div class="grid place-items-center h-screen">
-        <div {...props} class='w-96'>
-            <Slot/>
-        </div></div>
-})
 
 
 
