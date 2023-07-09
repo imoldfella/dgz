@@ -6,14 +6,29 @@ export interface LoginInfo {
     phone: string,
     cookies: string[],
     options: number
+
+    deviceDid: string
+    devicePrivate: string
+    deviceName: string
+  
+    registered: boolean
+    autoconnectUntil: number
+    token?: string
+
+    name: string,
+    did: string
+    private: string
+    ucanLogin: string
+    bip39: boolean
 }
+
+
 export interface ChallengeNotify {
     challenge_type: number
     challenge_sent_to: string
     other_options: number
     login_info?: LoginInfo
 }
-
 
 export interface LoginApi {
     loginpassword: (user: string, password: string) => Promise<[ChallengeNotify,string]>

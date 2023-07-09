@@ -4,13 +4,13 @@ import {
   useContextProvider,
   createContextId,
 } from '@builder.io/qwik';
-import { LoginApi, LoginInfo } from '../login/api';
-import { ClientState } from '../login';
- 
+import {  LoginInfo } from '../login/api';
+import { ClientState } from '../login/passkey';
+import { useNavigate } from '@builder.io/qwik-city';
+
 export interface Login {
     info?: LoginInfo
-    api?: LoginApi 
-    client?: ClientState
+    alt?: LoginInfo[]
 }
 // this is initalized by loading the login page.
 
@@ -30,3 +30,12 @@ export const useLogin = () => useContext(LoginContext);
 
 
 
+// logout is tricky, we can't get the context from an event handler can we?
+// log out of all tabs
+export const useLogout = () => {
+  const navigate = useNavigate()
+  return () => {
+    sessionStorage.removeItem('token');
+    navigate('/');
+  }
+}
