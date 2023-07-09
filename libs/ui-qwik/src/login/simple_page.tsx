@@ -1,5 +1,5 @@
 import { Slot, component$ } from "@builder.io/qwik"
-import { Ab, DarkButton, LanguageSelect, useLanguage } from "@dgz/ui-qwik"
+import { Ab, DarkButton, LanguageSelect, useLanguage } from ".."
 
 
 

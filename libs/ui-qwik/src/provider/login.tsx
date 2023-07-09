@@ -4,20 +4,29 @@ import {
   useContextProvider,
   createContextId,
 } from '@builder.io/qwik';
+import { LoginApi, LoginInfo } from '../login/api';
+import { ClientState } from '../login';
  
 export interface Login {
-    name: string;
+    info?: LoginInfo
+    api?: LoginApi 
+    client?: ClientState
 }
+// this is initalized by loading the login page.
+
+
 export const LoginContext = createContextId<Login>(
-  'docs.theme-context'
+  'docs.login-context'
 );
 
 export const LoginProvider =  component$(() => {
-    const login = useStore<Login>({
-        name: ''});
+    const login = useStore<Login>({});
     useContextProvider(LoginContext, login);
     return <Slot />
     })
     
 export const useLogin = () => useContext(LoginContext);
+
+
+
 
