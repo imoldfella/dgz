@@ -8,8 +8,9 @@ export const SimplePage = component$(() => {
     const ln = useLanguage()
 
     return <><div dir={ln.dir} class='px-2 space-x-1 my-2 fixed w-screen flex flex-row items-center'>
-
+      <div><Slot name='top-left'/></div>
       <div class='flex-1 '/>
+      
       <div class='w-48 '><LanguageSelect /></div>
       <DarkButton />
       <Ab href='#'>{ln.dir}</Ab>

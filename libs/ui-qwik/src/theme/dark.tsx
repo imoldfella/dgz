@@ -37,7 +37,6 @@ export const DarkButton = component$(() => {
           <Icon class="w-8 h-8" svg={moon}/>
         )}
       </button>
-      WTF{JSON.stringify(dark.value)}WTF
     </>
 });
 
