@@ -3,6 +3,7 @@ import { qwikCity } from '@builder.io/qwik-city/vite';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { qwikNxVite } from 'qwik-nx/plugins';
+import { qwikReact } from '@builder.io/qwik-react/vite';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/apps/dghome',
@@ -18,6 +19,7 @@ export default defineConfig({
       },
     }),
     tsconfigPaths({ root: '../../' }),
+    qwikReact(),
   ],
   server: {
     fs: {
@@ -30,12 +32,4 @@ export default defineConfig({
       'Cache-Control': 'public, max-age=600',
     },
   },
-  // test: {
-  //   globals: true,
-  //   cache: {
-  //     dir: '../../node_modules/.vitest',
-  //   },
-  //   environment: 'node',
-  //   include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-  // },
 });
