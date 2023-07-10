@@ -5,7 +5,6 @@ import {
     get as getPasskey,
     parseRequestOptionsFromJSON,
 } from "@github/webauthn-json/browser-ponyfill";
-import { security } from "./crypto";
 
 import { Login } from "../provider"
 import { LoginApi, LoginInfo } from "./api"
@@ -69,32 +68,31 @@ export class ClientState {
         this.abort.abort()
         this.abort = new AbortController()
         //const ws = createWs()
-        const sec = security()
 
         // if we loop here, do we need to do first  part twice
         // this will return nil if the user is not registered?
         // that doesn't seem right
         {
             try {
-                const o2 = await this.api.login(sec.deviceDid)
+                // const o2 = await this.api.login(sec.deviceDid)
                 // await ws.rpcj<any>("login", {
                 //     device: sec.deviceDid,
                 // })
 
-                const cro = parseRequestOptionsFromJSON(o2)
+                // const cro = parseRequestOptionsFromJSON(o2)
 
-                console.log("waiting for sign")
-                const o = await getPasskey({
-                    publicKey: cro.publicKey,
-                    signal: this.abort.signal,
-                    // @ts-ignore
-                    mediation: 'conditional'
-                })
-                console.log("got sign")
-                if (this.abort.signal.aborted) {
-                    console.log("aborted")
-                    return null
-                }
+                // console.log("waiting for sign")
+                // const o = await getPasskey({
+                //     publicKey: cro.publicKey,
+                //     signal: this.abort.signal,
+                //     // @ts-ignore
+                //     mediation: 'conditional'
+                // })
+                // console.log("got sign")
+                // if (this.abort.signal.aborted) {
+                //     console.log("aborted")
+                //     return null
+                // }
 
 
                 // token is not the socket challenge, it can be shared across tabs.

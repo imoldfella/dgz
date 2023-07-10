@@ -1,8 +1,8 @@
 
 // this needs to provide a way to connect to the go server with the login api
 
-import { component$, useVisibleTask$, Slot } from "@builder.io/qwik"
-import { H2, LoginApi, SimpleLogin, SimplePage, useLogin } from "@dgz/ui-qwik"
+import { component$, useVisibleTask$, Slot, noSerialize } from "@builder.io/qwik"
+import { ChallengeNotify, H2, LoginApi, LoginInfo, SimpleLogin, SimplePage, useLogin } from "@dgz/ui-qwik"
 // import { Peer, WsChannel, apiCall } from "../abc"
 
 
@@ -13,6 +13,39 @@ import { H2, LoginApi, SimpleLogin, SimplePage, useLogin } from "@dgz/ui-qwik"
 export const Signin = component$(()=>{
     const ch = useLogin()
     useVisibleTask$(({track, cleanup}) => {
+        const api : LoginApi = {
+            loginpassword: function (user: string, password: string): Promise<[ChallengeNotify, string]> {
+                throw new Error("Function not implemented.")
+            },
+            loginpassword2: function (secret: string): Promise<[LoginInfo, string]> {
+                throw new Error("Function not implemented.")
+            },
+            register: function (name: string): Promise<any> {
+                throw new Error("Function not implemented.")
+            },
+            registerb: function (cred: any): Promise<[string, string]> {
+                throw new Error("Function not implemented.")
+            },
+            addpasskey: function (): Promise<any> {
+                throw new Error("Function not implemented.")
+            },
+            addpasskey2: function (cred: any): Promise<[string, string]> {
+                throw new Error("Function not implemented.")
+            },
+            login2: function (cred: any): Promise<LoginInfo> {
+                throw new Error("Function not implemented.")
+            },
+            login: function (deviceId: string): Promise<any> {
+                throw new Error("Function not implemented.")
+            },
+            recover: function (email: string, phone: string): Promise<void> {
+                throw new Error("Function not implemented.")
+            },
+            recover2: function (otp: string): Promise<void> {
+                throw new Error("Function not implemented.")
+            }
+        }
+        ch.api = noSerialize(api)
         //const wss = new Peer(new WsChannel("/ws"))
         //ch.api = loginApi(wss)
     })

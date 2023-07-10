@@ -103,6 +103,10 @@ export const SimpleLogin = component$<Props>(({ onLogin, oauth }) => {
         })
     })
     const submitLogin = $(async () => {
+        factor2.isOpen = true
+        console.log('opened')
+        return
+
         const [cn, err] = await login.api!.loginpassword(user.value, password.value)
         if (err) {
             error.value = err
@@ -122,10 +126,10 @@ export const SimpleLogin = component$<Props>(({ onLogin, oauth }) => {
             //const [log, e] = await props.api.loginpassword2(secret)
         }
     })
-    return <form method='post' class='space-y-6' onSubmit$={submitLogin} >
+    return <form preventdefault:submit method='post' class='space-y-6' onSubmit$={submitLogin} >
         <Username autoFocus bind: value={user} />
         <Password bind: value={password} />
-        <DefaultButton  >{$localize`Sign in`}</DefaultButton>
+        <DefaultButton >{$localize`Sign in`}</DefaultButton>
         <TextDivider>{$localize`Continue with`}</TextDivider>
         {oauthx.value.length && <LoginWith />}
         <Modal title="test-modal" store={factor2}>
