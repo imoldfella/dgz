@@ -10,12 +10,16 @@ import { security } from "./crypto";
 import { Login } from "../provider"
 import { LoginApi, LoginInfo } from "./api"
 
-// only instantiated on the client
+
+// only instantiated on the client, only during login (lazy load all the things)
 export class ClientState {
     abort = new AbortController()
     error = ""
 
-    constructor(public login: Login) {
+    constructor(public login: Login, public onLogin: (x: LoginInfo)=>void, public onError: (x: string)=>void) {
+    }
+    destroy() {
+        this.abort.abort()
     }
 
     get api() {
@@ -40,87 +44,20 @@ export class ClientState {
     // in this case we still need to get the user name and password
     async watchPasskey() {
         try {
-            const i = await login.client.initPasskey(login.api)
+            const i = await this.initPasskey()
             if (i) {
-                login.info = i
+                this.onLogin(i)
             }
             else console.log("passkey watch cancelled")
         }
         catch (e) {
-            error.value = (e + "")
-        }
-    }
-   // we might nag them here to add a second factor, or even require it.
-    // if they send a password, but require a passkey, we need to trigger that
-    // if they give a passkey, but we need a password anyway, we need to handle that.
-    // we can't easily not advertise passkey, because don't know who will log in.
-    const submitLogin = async (e: any) => {
-        e.preventDefault()
-        // we clicked submit, so not a passkey. We need to check the login and potentially ask for second factor
-        //setScreen(Screen.Suspense)
-        let [ch, err] = await props.api.loginpassword(user(), password())
-        //await ws.rpcje<ChallengeNotify>("loginpassword", { username: user(), password: password() })
-        console.log("loginpassword", ch, err)
-        if (err) {
-            setError(err)
-            return
-        }
-        ch = ch!
-        abortController.abort()
-        // if the challenge type is 0 then we would ask for a second factor
-        const typ = ch?.challenge_type ?? 0
-        switch (typ) {
-            case 0:
-                // we are logged in, but we should ask for a second factor
-                setScreen(Screen.AddKey)// we need to add a passkey
-                setLoginInfo(ch?.login_info)
-                break
-            case Factor.kPasskey:
-            case Factor.kPasskeyp:
-                const li = await webauthnLogin()
-                props.setLogin(li)
-                break
-            case Factor.kNone:
-                // we must have login here, because if we didn't we would have gotten an error
-                props.setLogin(ch.login_info!)
-                break
-            default:
-                setScreen(Screen.Secret)
-        }
-    }
-    // called when the user has confirmed the secret or has given up
-    const confirmSecret = (ok: boolean) => {
-        // either way we close the dialog
-        if (ok) {
-            setScreen(Screen.Login)
-            if (!loginInfo()) {
-                setError("challenge failed")
-            } else {
-                props.setLogin(loginInfo()!)
-            }
+            this.onError (e + "")
         }
     }
 
-    const onCloseAddKey = (choice: PasskeyChoice, err: string) => {
-        console.log("closed passkey dialog")
-        setScreen(Screen.Suspense)
-        // we must have login info here, or we wouldn't be asking to add a passkey
-        props.setLogin(loginInfo()!)
-    }
 
-    const validate = async (secret: string) => {
-        // this must be a socket call
-        const [log, e] = await props.api.loginpassword2(secret)
-        // await ws.rpcje<LoginInfo>("loginpassword2", { challenge: secret })
-        if (e) {
-            setError(e)
-            return false
-        }
-        setLoginInfo(log)
-        return true
-    }
     // returns null if the login is aborted
-    async initPasskey(login: Login): Promise<LoginInfo | null> {
+    async initPasskey() {
         if (!window.PublicKeyCredential
             // @ts-ignore
             || !PublicKeyCredential.isConditionalMediationAvailable
@@ -139,22 +76,22 @@ export class ClientState {
         // that doesn't seem right
         {
             try {
-                const o2 = await api.login(sec.deviceDid)
+                const o2 = await this.api.login(sec.deviceDid)
                 // await ws.rpcj<any>("login", {
                 //     device: sec.deviceDid,
                 // })
 
                 const cro = parseRequestOptionsFromJSON(o2)
-                setCrox(cro)
+
                 console.log("waiting for sign")
-                const o = await get({
+                const o = await getPasskey({
                     publicKey: cro.publicKey,
-                    signal: abortController.signal,
+                    signal: this.abort.signal,
                     // @ts-ignore
                     mediation: 'conditional'
                 })
                 console.log("got sign")
-                if (abortController.signal.aborted) {
+                if (this.abort.signal.aborted) {
                     console.log("aborted")
                     return null
                 }

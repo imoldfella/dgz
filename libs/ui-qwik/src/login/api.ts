@@ -28,6 +28,7 @@ export interface ChallengeNotify {
     challenge_sent_to: string
     other_options: number
     login_info?: LoginInfo
+    passkey_nag?: boolean
 }
 
 export interface LoginApi {

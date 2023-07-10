@@ -1,6 +1,4 @@
 import { decode } from "cbor-x"
-import { createContext, createSignal, useContext } from "solid-js"
-
 
 export interface Channel {
     postMessage(data: any, transfer?: any[]): void
@@ -75,6 +73,7 @@ export class WsChannel implements Channel {
         this.connect()
     }
     status(x: string) {
+        console.log("ws status", x)
     }
     connect() {
         this.ws = new WebSocket(this.url)

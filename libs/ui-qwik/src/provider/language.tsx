@@ -19,11 +19,11 @@ export const LanguageContext = createContextId<Language>(
 const rtl = ["iw","ar"]
  
 export interface Props {
-  avail: string[]
+  avail: string
   default: string
   defaultlc?: string
 }
-export const LanguageProvider =  component$((props: Props) => {
+export const LanguageProvider =  component$<Props>((props) => {
   const loc = useLocation()
   let ln = loc.url.pathname.split('/')[1]
   if (!props.avail.includes(ln)) {
@@ -33,7 +33,7 @@ export const LanguageProvider =  component$((props: Props) => {
     ln: ln,
     lc: props.defaultlc ?? props.default,
     dir: rtl.includes(props.default) ? 'rtl' : 'ltr',
-    avail: props.avail,
+    avail: props.avail.split(' '),
   })
   useContextProvider(LanguageContext, lang);
   return <Slot />

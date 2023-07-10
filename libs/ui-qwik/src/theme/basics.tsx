@@ -13,6 +13,13 @@ export const Ab = component$((props: LinkProps) => {
     </Link>
 })
 
+type DivProps = JSX.IntrinsicElements['div']
+export const H2 = component$<DivProps>((props) => {
+  return <h2 class={`pt-4 text-2xl font-bold dark:text-white ${props.class}`}>
+    <Slot/>
+  </h2>
+})
 
-
-
+export const H3 = component$<DivProps>((props) => {
+  return <h3 class={`pt-4 pb-2 text-xl font-bold dark:text-white ${props.class}`}><Slot/></h3>
+})

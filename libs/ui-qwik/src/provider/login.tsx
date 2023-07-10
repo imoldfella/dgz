@@ -1,16 +1,20 @@
-import { type Signal, component$, useSignal, Slot, useStore } from '@builder.io/qwik';
+import { type Signal, type noSerialize, component$, useSignal, Slot, useStore, NoSerialize } from '@builder.io/qwik';
 import {
   useContext,
   useContextProvider,
   createContextId,
 } from '@builder.io/qwik';
-import {  LoginInfo } from '../login/api';
+import {  LoginApi, LoginInfo } from '../login/api';
 import { ClientState } from '../login/passkey';
 import { useNavigate } from '@builder.io/qwik-city';
 
+ 
 export interface Login {
     info?: LoginInfo
     alt?: LoginInfo[]
+
+    api?: NoSerialize<LoginApi>
+    client?: NoSerialize<ClientState>
 }
 // this is initalized by loading the login page.
 
@@ -39,3 +43,5 @@ export const useLogout = () => {
     navigate('/');
   }
 }
+
+

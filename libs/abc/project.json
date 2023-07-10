@@ -1,0 +1,24 @@
+{
+  "name": "abc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/abc/src",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["../..//coverage/libs/abc"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/abc"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/abc/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

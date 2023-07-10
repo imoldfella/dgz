@@ -9,6 +9,7 @@
     "@github/webauthn-json": "^2.1.1",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
+    "cbor-x": "^1.5.3",
     "qwik-nx": "1.0.7",
     "tailwindcss": "^3.3.2"
   },

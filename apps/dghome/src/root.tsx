@@ -22,7 +22,7 @@ export default component$(() => {
 
 
   return <QwikCityProvider> 
-      <LanguageProvider avail={['en','es', 'iw']}>
+      <LanguageProvider avail='en es iw' default='en'>
       <LoginProvider  >
       <head>
         <meta charSet="utf-8" />

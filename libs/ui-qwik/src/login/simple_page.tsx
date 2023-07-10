@@ -12,7 +12,6 @@ export const SimplePage = component$(() => {
 
         <div class='w-48 '><LanguageSelect /></div>
         <DarkButton />
-        <Ab href='#'>{ln.dir}</Ab>
     </div>
         <div class="flex items-center justify-center w-screen h-screen">
             <div class='w-96'>
