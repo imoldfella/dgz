@@ -17,6 +17,7 @@
     "paths": {
       "@dgz/abc": ["libs/abc/src/index.ts"],
       "@dgz/dgh": ["libs/dgh/src/index.ts"],
+      "@dgz/editor": ["libs/editor/src/index.ts"],
       "@dgz/lexical": ["libs/lexical/src/index.ts"],
       "@dgz/ui-qwik": ["libs/ui-qwik/src/index.ts"]
     }
