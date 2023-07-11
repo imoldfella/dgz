@@ -1,9 +1,14 @@
 /** @jsxImportSource react */
 import { qwikify$ } from '@builder.io/qwik-react';
+import { LexicalComposer } from '@lexical/react'
  
 // Create React component standard way
 function Greetings() {
-  return <p>Hello from React</p>;
+  return <>
+    <LexicalComposer>
+      </LexicalComposer>
+      <p>Hello from React</p>
+      </>
 }
  
 // Convert React component to Qwik component
